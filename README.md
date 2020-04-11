@@ -1,21 +1,24 @@
 # Introduction
-There are 2 choices to do, there are my choices:
+There are 2 choices to do, Here are my choices:
 - Concerning technology, I chose **VueJS** + **VueRouter**
 - Concerning scenario, I chose **Visualization dashboard**
 
 <br><br>
 There are 3 functionalities in the application:
-- Go to visualize: The first chart allows to filter the gender. The choice made on first chart is reflected on the second chart and map screen
-- Go to edit: This screen allows to edit any people. The update is reflected on visualization screen and map screen
-- Go to map: This screen displays a map in what all people is placed
+- **Go to visualize**: This screen displays 2 charts. <br>
+The first chart allows to filter the gender. <br>
+The choice made on first chart is reflected on the second chart and map screen
+- **Go to edit**: This screen allows to edit any people. <br>
+ The update is reflected on visualization screen and map screen
+- **Go to map**: This screen displays a map in what all people is placed
 
 # Installation
 - `git clone git@github.com:farpat/suade-test`
-- `make install`: This makefile command installs npm dependencies via docker
+- `make install`: This makefile command installs npm dependencies via docker and cypress locally
 <br>**Don't hesitate to display all commands by entering `make help`**
 
 # Use
-- `make dev`: This command runs all development servers to work well. *Note that this command displays all servers runned*
+- `make dev`: This command runs all development servers to work well. *Note that this command displays all servers running*
 - `make stop-dev`: This command stops all development servers
 
 # Tests
