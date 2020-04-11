@@ -1,0 +1,8 @@
+/node_modules
+/public/assets
+/.idea
+*.log
+.env
+/cypress/videos
+/cypress/screenshots
+/cypress/.cache
