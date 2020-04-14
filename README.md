@@ -14,6 +14,7 @@ The choice made on first chart is reflected on the second chart and map screen
 
 # Installation
 - `git clone git@github.com:farpat/suade-test`
+- `cp .env.example .env` : Copy the environment variables. You can edit this file but the actually variables work.
 - `make install`: This makefile command installs npm dependencies via docker and cypress locally
 <br>**Don't hesitate to display all commands by entering `make help`**
 

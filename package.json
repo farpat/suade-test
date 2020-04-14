@@ -24,7 +24,7 @@
     "devDependencies": {
         "autoprefixer": "^9.7.6",
         "css-loader": "^3.5.2",
-        "cypress": "^4.3.0",
+        "cypress": "^4.4.0",
         "dotenv": "^8.2.0",
         "exports-loader": "^0.7.0",
         "file-loader": "^6.0.0",
