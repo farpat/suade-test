@@ -1,15 +1,15 @@
-require('dotenv').config();
-const webpack = require('webpack');
-const config = require('./config');
-const path = require('path');
-const isDebug = process.env.NODE_ENV === 'development';
+require('dotenv').config()
+const webpack = require('webpack')
+const config = require('./config')
+const path = require('path')
+const isDebug = process.env.NODE_ENV === 'development'
 
-const {VueLoaderPlugin} = require('vue-loader');
-const terserPlugin = require('terser-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const WebpackBundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const ManifestPlugin = require('webpack-manifest-plugin');
+const {VueLoaderPlugin} = require('vue-loader')
+const terserPlugin = require('terser-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const WebpackBundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const ManifestPlugin = require('webpack-manifest-plugin')
 
 let configWebpack = {
     devServer:    {
@@ -26,9 +26,10 @@ let configWebpack = {
         stats:          {
             colors: true,
             chunks: false
-        },
+        }
     },
     mode:         isDebug ? 'development' : 'production',
+    devtool:      isDebug ? 'eval-source-map' : false,
     optimization: {
         minimizer: [
             new terserPlugin({
@@ -43,16 +44,36 @@ let configWebpack = {
     output:       {
         path:       path.resolve('./public/assets'),
         filename:   isDebug ? '[name].js' : '[name].[chunkhash:4].js',
-        publicPath: `${isDebug ? ('http://localhost:' + process.env.WEBPACK_DEV_SERVER_PORT) : ''}/assets/`,
+        publicPath: `${isDebug ? ('http://localhost:' + process.env.WEBPACK_DEV_SERVER_PORT) : ''}/assets/`
     },
     resolve:      {
-        extensions: ['.js', '.vue', '.json'],
-        alias:      {
-            vue: 'vue/dist/vue.js'
-        }
+        extensions: ['.ts', '.js', '.vue', '.json'],
+        alias:      {'vue$': 'vue/dist/vue.esm.js'}
     },
     module:       {
         rules: [
+            {
+                test:    /\.vue$/,
+                loader:  'vue-loader',
+                options: {
+                    loaders: {
+                        // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
+                        // the "scss" and "sass" values for the lang attribute to the right configs here.
+                        // other preprocessors should work out of the box, no loader config like this necessary.
+                        'scss': 'vue-style-loader!css-loader!sass-loader',
+                        'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
+                    }
+                    // other vue-loader options go here
+                }
+            },
+            {
+                test:    /\.tsx?$/,
+                loader:  'ts-loader',
+                exclude: /node_modules/,
+                options: {
+                    appendTsSuffixTo: [/\.vue$/]
+                }
+            },
             //scss
             {
                 test: /\.scss$/,
@@ -61,7 +82,7 @@ let configWebpack = {
                     {loader: 'css-loader', options: {sourceMap: isDebug}},
                     {loader: 'postcss-loader', options: {sourceMap: isDebug}},
                     {loader: 'sass-loader', options: {sourceMap: isDebug}}
-                ],
+                ]
             },
             //css
             {
@@ -70,13 +91,7 @@ let configWebpack = {
                     isDebug ? {loader: 'vue-style-loader'} : MiniCssExtractPlugin.loader,
                     {loader: 'css-loader', options: {sourceMap: isDebug}},
                     {loader: 'postcss-loader', options: {sourceMap: isDebug}}
-                ],
-            },
-            //vue
-            {
-                test:    /\.vue$/,
-                exclude: /node_modules/,
-                loader:  'vue-loader'
+                ]
             },
             //fonts
             {
@@ -97,7 +112,7 @@ let configWebpack = {
                         options: {enabled: !isDebug}
                     }
                 ]
-            },
+            }
         ]
     },
     plugins:      [
@@ -105,16 +120,16 @@ let configWebpack = {
 
         new MiniCssExtractPlugin({
             filename: '[name].[hash:4].css',
-            disable:  isDebug,
-        }),
-    ],
-};
+            disable:  isDebug
+        })
+    ]
+}
 
 if (!isDebug) {
     configWebpack.plugins.push(
         new WebpackBundleAnalyzerPlugin({
             analyzerMode: 'static',
-            openAnalyzer: false,
+            openAnalyzer: false
         }),
 
         new ManifestPlugin(),
@@ -124,7 +139,7 @@ if (!isDebug) {
                 NODE_ENV: '"production"'
             }
         })
-    );
+    )
 }
 
-module.exports = configWebpack;
+module.exports = configWebpack

@@ -72,34 +72,30 @@
     </tr>
 </template>
 
-<script>
-    import ChartStore from "../../store/ChartStore";
+<script lang="ts">
+    import ChartStore, {Person} from "../../store/ChartStore"
+    import {Component, Prop, Vue} from "vue-property-decorator"
 
-    export default {
-        props:   {
-            person: {type: Object, required: true}
-        },
-        data() {
-            return {
-                isEditing:     false,
-                currentPerson: this.person,
-            };
-        },
-        methods: {
-            edit() {
-                this.isEditing = true;
-            },
-            cancel() {
-                this.isEditing = false;
+    @Component
+    export default class PersonRow extends Vue {
+        @Prop({required: true}) readonly person!: Person
+        isEditing = false
+        currentPerson = this.person
 
-                this.currentPerson = this.person;
-            },
-            confirm() {
-                this.isEditing = false;
+        private edit() {
+            this.isEditing = true
+        }
 
-                ChartStore.updatePerson(this.currentPerson);
-                ChartStore.updatePeople(ChartStore.state.currentFilters);
-            },
-        },
+        private cancel() {
+            this.isEditing = false
+            this.currentPerson = this.person
+        }
+
+        private confirm() {
+            this.isEditing = false
+
+            ChartStore.updatePerson(this.currentPerson)
+            ChartStore.updatePeople(ChartStore.state.currentFilters)
+        }
     }
 </script>

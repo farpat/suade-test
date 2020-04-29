@@ -21,16 +21,15 @@
     </section>
 </template>
 
-<script>
-    import ChartStore from "../../store/ChartStore";
-    import PersonRow from "./PersonRow";
+<script lang="ts">
+    import ChartStore from "../../store/ChartStore"
+    import PersonRow from "./PersonRowComponent.vue"
+    import {Component, Vue} from "vue-property-decorator"
 
-    export default {
-        components: {PersonRow},
-        data() {
-            return {
-                state: ChartStore.state
-            }
-        }
+    @Component({
+        components: {PersonRow}
+    })
+    export default class EditionComponent extends Vue {
+        state = ChartStore.state
     }
 </script>

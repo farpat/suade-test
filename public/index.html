@@ -8,28 +8,12 @@
     <title>Suade test</title>
 </head>
 <body>
-<main id="app" class="container-fluid py-3 mx-auto">
+<main class="container-fluid py-3 mx-auto">
     <section class="jumbotron">
         <h1 class="display-4">Suade test</h1>
     </section>
 
-    <nav>
-        <ul class="nav nav-pills mb-1">
-            <router-link tag="li" :to="{name: 'visualize'}" v-slot="{isActive, href}" class="nav-item">
-                <a :href="href" :class="{'nav-link':true, 'active':isActive}">Go to visualization</a>
-            </router-link>
-
-            <router-link tag="li" :to="{name: 'edit'}" v-slot="{isActive, href}" class="nav-item">
-                <a :href="href" :class="{'nav-link':true, 'active':isActive}">Go to edition</a>
-            </router-link>
-
-            <router-link tag="li" :to="{name: 'map'}" v-slot="{isActive, href}" class="nav-item">
-                <a :href="href" :class="{'nav-link':true, 'active':isActive}">Go to map</a>
-            </router-link>
-        </ul>
-    </nav>
-
-    <router-view></router-view>
+    <div id="app"></div>
 </main>
 
 <!-- in production, you must load the good app.js by helping ./public/assets/manifest.json -->

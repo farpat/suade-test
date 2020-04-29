@@ -7,14 +7,14 @@ describe('Visualization tests', () => {
     it('displays all pets on first load', () => {
         cy.get('h2').eq(1).contains('Step 2 : Watch all pets');
         cy.window().then((win) => {
-            const labels = win.petReparitionChart.data.labels;
+            const labels = win.petRepartitionChart.data.labels;
             expect(labels).to.be.an('Array');
             expect(labels[0]).equals('bird');
             expect(labels[1]).equals('cat');
             expect(labels[2]).equals('dog');
             expect(labels[3]).equals('none');
 
-            const data = win.petReparitionChart.data.datasets[0].data;
+            const data = win.petRepartitionChart.data.datasets[0].data;
             expect(data).to.be.an('Array');
             expect(data[0]).equals(8);
             expect(data[1]).equals(12);
@@ -28,14 +28,14 @@ describe('Visualization tests', () => {
         cy.get('h2').eq(1).contains('Step 2 : Watch all pets of women');
 
         cy.window().then((win) => {
-            const labels = win.petReparitionChart.data.labels;
+            const labels = win.petRepartitionChart.data.labels;
             expect(labels).to.be.an('Array');
             expect(labels[0]).equals('bird');
             expect(labels[1]).equals('cat');
             expect(labels[2]).equals('dog');
             expect(labels[3]).equals('none');
 
-            const data = win.petReparitionChart.data.datasets[0].data;
+            const data = win.petRepartitionChart.data.datasets[0].data;
             expect(data).to.be.an('Array');
             expect(data[0]).equals(2);
             expect(data[1]).equals(9);
@@ -50,14 +50,14 @@ describe('Visualization tests', () => {
         cy.get('h2').eq(1).contains('Step 2 : Watch all pets of men');
 
         cy.window().then((win) => {
-            const labels = win.petReparitionChart.data.labels;
+            const labels = win.petRepartitionChart.data.labels;
             expect(labels).to.be.an('Array');
             expect(labels[0]).equals('bird');
             expect(labels[1]).equals('cat');
             expect(labels[2]).equals('dog');
             expect(labels[3]).equals('none');
 
-            const data = win.petReparitionChart.data.datasets[0].data;
+            const data = win.petRepartitionChart.data.datasets[0].data;
             expect(data).to.be.an('Array');
             expect(data[0]).equals(6);
             expect(data[1]).equals(3);
@@ -71,12 +71,12 @@ describe('Visualization tests', () => {
         cy.get('h2').eq(1).contains('Step 2 : Watch no pets');
 
         cy.window().then((win) => {
-            const labels = win.petReparitionChart.data.labels;
+            const labels = win.petRepartitionChart.data.labels;
             expect(labels).to.be.an('Array');
             expect(labels.length).equals(0);
 
 
-            const data = win.petReparitionChart.data.datasets[0].data;
+            const data = win.petRepartitionChart.data.datasets[0].data;
             expect(data).to.be.an('Array');
             expect(data.length).equals(0);
         });
