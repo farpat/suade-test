@@ -9,17 +9,17 @@ import store from "./Chart/store/ChartStore"
 Vue.use(VueRouter)
 
 const routes = [
-    {path: '/', redirect: '/visualize', name: 'home'},
-    {path: '/visualize', component: VisualizationComponent, name: 'visualize'},
-    {path: '/edit', component: EditionComponent, name: 'edit'},
-    {path: '/map', component: MapComponent, name: 'map'}
+  {path: '/', redirect: '/visualize', name: 'home'},
+  {path: '/visualize', component: VisualizationComponent, name: 'visualize'},
+  {path: '/edit', component: EditionComponent, name: 'edit'},
+  {path: '/map', component: MapComponent, name: 'map'}
 ]
 
 const router = new VueRouter({routes})
 
 new Vue({
-    el: '#app',
-    router,
-    store,
-    render: createElement => createElement(ApplicationComponent)
+  el: '#app',
+  router,
+  store,
+  render: createElement => createElement(ApplicationComponent)
 })

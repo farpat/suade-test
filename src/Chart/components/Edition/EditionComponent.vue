@@ -1,7 +1,7 @@
 <template>
     <section>
         <h2>People table</h2>
-        <table id="people-table" class="table table-striped">
+        <table class="table table-striped" id="people-table">
             <thead>
             <tr>
                 <th>#</th>
@@ -22,15 +22,15 @@
 </template>
 
 <script lang="ts">
-    import PersonRow from "./PersonRowComponent.vue"
-    import {Component, Vue} from "vue-property-decorator"
+  import PersonRow from "./PersonRowComponent.vue"
+  import {Component, Vue} from "vue-property-decorator"
 
-    @Component({
-        components: {PersonRow}
-    })
-    export default class EditionComponent extends Vue {
-        get allPeople() {
-            return this.$store.state.allPeople
-        }
+  @Component({
+    components: {PersonRow}
+  })
+  export default class EditionComponent extends Vue {
+    get allPeople() {
+      return this.$store.state.allPeople
     }
+  }
 </script>

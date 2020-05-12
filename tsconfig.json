@@ -1,17 +1,17 @@
 {
-    "compilerOptions": {
-        "sourceMap": true,
-        "strict": true,
-        "module": "es6",
-        "moduleResolution": "node",
-        "target": "es2017",
-        "experimentalDecorators": true,
-        "noImplicitAny": false
-    },
-    "include": [
-        "./src/**/*"
-    ],
-    "exclude": [
-        "node_modules"
-    ]
+  "compilerOptions": {
+    "sourceMap": true,
+    "strict": true,
+    "module": "es6",
+    "moduleResolution": "node",
+    "target": "es2017",
+    "experimentalDecorators": true,
+    "noImplicitAny": false
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

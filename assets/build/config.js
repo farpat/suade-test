@@ -1,8 +1,8 @@
 module.exports = {
-    entry: {
-        app: [
-            './assets/scss/app.scss',
-            './src/app.ts'
-        ]
-    }
+  entry: {
+    app: [
+      './assets/scss/app.scss',
+      './src/app.ts'
+    ]
+  }
 }

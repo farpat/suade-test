@@ -13,25 +13,25 @@
 </template>
 
 <script lang="ts">
-    import GenderRepartitionComponent from "./GenderRepartitionComponent.vue"
-    import PetRepartitionComponent from "./PetRepartitionComponent.vue"
-    import {Component, Vue} from "vue-property-decorator"
+  import GenderRepartitionComponent from "./GenderRepartitionComponent.vue"
+  import PetRepartitionComponent from "./PetRepartitionComponent.vue"
+  import {Component, Vue} from "vue-property-decorator"
 
 
-    @Component({
-        components: {PetRepartitionComponent, GenderRepartitionComponent}
-    })
-    export default class VisualizationComponent extends Vue {
-        private get animalsLabel(): string {
-            if (this.$store.state.currentFilters.men && this.$store.state.currentFilters.women) {
-                return 'all pets'
-            } else if (this.$store.state.currentFilters.men) {
-                return 'all pets of men'
-            } else if (this.$store.state.currentFilters.women) {
-                return 'all pets of women'
-            }
+  @Component({
+    components: {PetRepartitionComponent, GenderRepartitionComponent}
+  })
+  export default class VisualizationComponent extends Vue {
+    private get animalsLabel(): string {
+      if (this.$store.state.currentFilters.men && this.$store.state.currentFilters.women) {
+        return 'all pets'
+      } else if (this.$store.state.currentFilters.men) {
+        return 'all pets of men'
+      } else if (this.$store.state.currentFilters.women) {
+        return 'all pets of women'
+      }
 
-            return 'no pets'
-        }
+      return 'no pets'
     }
+  }
 </script>
