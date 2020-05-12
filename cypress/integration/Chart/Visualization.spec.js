@@ -6,7 +6,7 @@ describe('Visualization tests', () => {
 
     it('displays all pets on first load', () => {
         cy.get('h2').eq(1).contains('Step 2 : Watch all pets')
-        cy.wait(100)
+        cy.wait(500)
         cy.window().then((win) => {
             const labels = win.petRepartitionChart.data.labels
             expect(labels).to.be.an('Array')
