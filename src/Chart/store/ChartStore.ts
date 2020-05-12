@@ -45,9 +45,7 @@ export default new Vuex.Store({
             state.currentFilters[filter] = false
         },
         applyFilter(state: IState, filter: IFilter) {
-            state.currentPeople = state.allPeople.filter(person =>
-                (filter.women && person.gender === 'female') || (filter.men && person.gender === 'male')
-            )
+            state.currentPeople = state.allPeople.filter(person => (filter.women && person.gender === 'female') || (filter.men && person.gender === 'male'))
         },
         updatePerson(state: IState, currentPerson: IPerson) {
             state.allPeople = state.allPeople.map(person => person._id === currentPerson._id ? currentPerson : person)

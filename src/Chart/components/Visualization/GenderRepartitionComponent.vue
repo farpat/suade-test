@@ -49,7 +49,7 @@
             const defaultLegendClickHandler = Chart.defaults.doughnut.legend.onClick
             const self = this
             const newLegendClickHandler = function (this, event, legendItem) {
-                defaultLegendClickHandler.call(this, event, legendItem)
+                defaultLegendClickHandler.call(this, event, legendItem) //this references newLegendClickHandler
 
                 if (self.$store.getters.isTheFilterActivated(legendItem.text)) {
                     self.$store.commit('removeFilter', legendItem.text)
