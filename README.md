@@ -1,6 +1,6 @@
 # Introduction
 There are 2 choices to do, Here are my choices:
-- Concerning technology, I chose **VueJS** + **VueRouter**
+- Concerning technology, I chose **VueJS** + **VueRouter** + **VueX** writing with **TypeScript**
 - Concerning scenario, I chose **Visualization dashboard**
 
 <br><br>
