@@ -7,18 +7,18 @@
 <script lang="ts">
     import * as L from "leaflet"
     import "leaflet/dist/leaflet.css"
-    import ChartStore, {Person} from "../../store/ChartStore"
     import {Component, Vue} from "vue-property-decorator"
+    import {IPerson} from "../../../type"
 
     @Component
     export default class MapComponent extends Vue {
         $positions?: Array<[number, number]>
         $map?: L.Map
 
-        mounted() {
+        private mounted() {
             this.mountMap()
             this.$positions = []
-            for (let person of ChartStore.state.currentPeople) {
+            for (let person of this.$store.state.currentPeople) {
                 this.addCircle(person)
             }
             this.centerMap()
@@ -37,7 +37,7 @@
             }).addTo(this.$map)
         }
 
-        private addCircle(person: Person) {
+        private addCircle(person: IPerson) {
             let position: [number, number] = [person.location.latitude, person.location.longitude]
 
             if (this.$positions) {

@@ -15,14 +15,13 @@
             </tr>
             </thead>
             <tbody>
-            <PersonRow :key="person._id" :person="person" v-for="person in state.allPeople"></PersonRow>
+            <PersonRow :key="person._id" :person="person" v-for="person in allPeople"></PersonRow>
             </tbody>
         </table>
     </section>
 </template>
 
 <script lang="ts">
-    import ChartStore from "../../store/ChartStore"
     import PersonRow from "./PersonRowComponent.vue"
     import {Component, Vue} from "vue-property-decorator"
 
@@ -30,6 +29,8 @@
         components: {PersonRow}
     })
     export default class EditionComponent extends Vue {
-        state = ChartStore.state
+        get allPeople() {
+            return this.$store.state.allPeople
+        }
     }
 </script>

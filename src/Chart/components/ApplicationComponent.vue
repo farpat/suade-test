@@ -25,5 +25,8 @@
 
     @Component
     export default class ApplicationComponent extends Vue {
+        private mounted() {
+            this.$store.dispatch('loadApplication')
+        }
     }
 </script>

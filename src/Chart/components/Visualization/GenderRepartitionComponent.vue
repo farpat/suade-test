@@ -6,14 +6,14 @@
 
 <script lang="ts">
     import {Chart} from "chart.js"
-    import ChartStore, {Person} from "../../store/ChartStore"
-    import {Component, Vue} from "vue-property-decorator"
+    import {Component, Vue, Watch} from "vue-property-decorator"
+    import {IDataChart, IGenderRepartition, IPerson} from "../../../type"
 
     @Component
     export default class GenderRepartition extends Vue {
-        state = ChartStore.state
+        private $genderRepartitionChart?: Chart
 
-        private computeRepartition(people: Person[]): { men: number; women: number } {
+        private computeRepartition(people: IPerson[]): IGenderRepartition {
             let repartition = {men: 0, women: 0}
             for (let person of people) {
                 if (person.gender === 'male') {
@@ -26,32 +26,44 @@
             return repartition
         }
 
-        private mounted() {
-            const repartition = this.computeRepartition(this.state.currentPeople)
+        private getDataForChartJs(repartition: IGenderRepartition): IDataChart {
+            return {
+                labels: ['men', 'women'],
+                datasets: [{
+                    data: [repartition.men, repartition.women],
+                    backgroundColor: ['lightblue', 'lightcoral'],
+                    label: 'Gender Repartition'
+                }]
+            }
+        }
 
+        @Watch('$store.state.currentPeople')
+        private onCurrentPeopleChanged(): void {
+            if (this.$genderRepartitionChart) {
+                this.$genderRepartitionChart.data = this.getDataForChartJs(this.computeRepartition(this.$store.state.currentPeople))
+                this.$genderRepartitionChart.update()
+            }
+        }
+
+        private mounted(): void {
             const defaultLegendClickHandler = Chart.defaults.doughnut.legend.onClick
-            const newLegendClickHandler = function (this: { onClick: (event: any, legendItem: any) => void }, event, legendItem) {
+            const self = this
+            const newLegendClickHandler = function (this, event, legendItem) {
                 defaultLegendClickHandler.call(this, event, legendItem)
 
-                if (legendItem.hidden === false) {
-                    ChartStore.removeInCurrentFilters(legendItem.text)
+                if (self.$store.getters.isTheFilterActivated(legendItem.text)) {
+                    self.$store.commit('removeFilter', legendItem.text)
                 } else {
-                    ChartStore.addInCurrentFilters(legendItem.text)
+                    self.$store.commit('addFilter', legendItem.text)
                 }
 
-                ChartStore.updatePeople(ChartStore.state.currentFilters)
+                self.$store.commit('applyFilter', self.$store.state.currentFilters)
             }
 
-            new Chart(<HTMLCanvasElement>this.$el.querySelector('#gender-repartition-chart'), {
+
+            this.$genderRepartitionChart = new Chart(<HTMLCanvasElement>this.$el.querySelector('#gender-repartition-chart'), {
                 type: 'pie',
-                data: {
-                    datasets: [{
-                        data: [repartition.men, repartition.women],
-                        backgroundColor: ['lightblue', 'lightcoral'],
-                        label: 'Gender repartition'
-                    }],
-                    labels: ['men', 'women']
-                },
+                data: this.getDataForChartJs(this.computeRepartition(this.$store.state.currentPeople)),
                 options: {
                     legend: {onClick: newLegendClickHandler}
                 }

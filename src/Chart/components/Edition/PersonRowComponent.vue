@@ -73,12 +73,12 @@
 </template>
 
 <script lang="ts">
-    import ChartStore, {Person} from "../../store/ChartStore"
     import {Component, Prop, Vue} from "vue-property-decorator"
+    import {IPerson} from "../../../type"
 
     @Component
     export default class PersonRow extends Vue {
-        @Prop({required: true}) readonly person!: Person
+        @Prop({required: true}) readonly person!: IPerson
         isEditing = false
         currentPerson = this.person
 
@@ -94,8 +94,8 @@
         private confirm() {
             this.isEditing = false
 
-            ChartStore.updatePerson(this.currentPerson)
-            ChartStore.updatePeople(ChartStore.state.currentFilters)
+            this.$store.commit('updatePerson', this.currentPerson)
+            this.$store.commit('applyFilter', this.$store.state.currentFilters)
         }
     }
 </script>

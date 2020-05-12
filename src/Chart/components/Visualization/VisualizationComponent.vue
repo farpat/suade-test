@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-md-6">
-            <h2>Step 1 : Filter by gender</h2>
+            <h2>Step 1 : IFilter by gender</h2>
             <GenderRepartitionComponent></GenderRepartitionComponent>
         </div>
 
@@ -13,7 +13,6 @@
 </template>
 
 <script lang="ts">
-    import ChartStore from "../../store/ChartStore"
     import GenderRepartitionComponent from "./GenderRepartitionComponent.vue"
     import PetRepartitionComponent from "./PetRepartitionComponent.vue"
     import {Component, Vue} from "vue-property-decorator"
@@ -23,14 +22,12 @@
         components: {PetRepartitionComponent, GenderRepartitionComponent}
     })
     export default class VisualizationComponent extends Vue {
-        state = ChartStore.state
-
         private get animalsLabel(): string {
-            if (this.state.currentFilters.men && this.state.currentFilters.women) {
+            if (this.$store.state.currentFilters.men && this.$store.state.currentFilters.women) {
                 return 'all pets'
-            } else if (this.state.currentFilters.men) {
+            } else if (this.$store.state.currentFilters.men) {
                 return 'all pets of men'
-            } else if (this.state.currentFilters.women) {
+            } else if (this.$store.state.currentFilters.women) {
                 return 'all pets of women'
             }
 

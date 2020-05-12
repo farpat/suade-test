@@ -1,90 +1,56 @@
-import Requestor from "@farpat/api"
+import Vuex from 'vuex'
+import {IFilter, IPerson} from "../../type"
 import Vue from "vue"
+import Requestor from "@farpat/api"
 
-export interface Person {
-    _id: number,
-    age: number,
-    eyeColor: string,
-    name: string,
-    gender: string,
-    location: { latitude: number, longitude: number },
-    preferences: { pet: string, fruit: string }
+Vue.use(Vuex)
+
+interface IState {
+    allPeople: Array<IPerson>,
+    currentPeople: Array<IPerson>,
+    currentFilters: IFilter
 }
 
-export interface Filter {
-    men: boolean,
-    women: boolean
+const state: IState = {
+    allPeople: [],
+    currentPeople: [],
+    currentFilters: {women: true, men: true}
 }
 
-class ChartStore {
-    state: {
-        allPeople: Array<Person>,
-        currentPeople: Array<Person>,
-        currentFilters: Filter,
-    }
-
-    constructor() {
-        this.state = {
-            allPeople: [],
-            currentPeople: [],
-            currentFilters: {men: true, women: true}
+export default new Vuex.Store({
+    strict: true,
+    state,
+    actions: {
+        async loadApplication(context) {
+            context.commit('loadApplication', await Requestor.newRequest().get('https://updates.suade.org/files/people.json'))
+        }
+    },
+    getters: {
+        isTheFilterActivated(state: IState) {
+            return (filter: string) => {
+                return state.currentFilters[filter]
+            }
+        }
+    },
+    mutations: {
+        loadApplication(state: IState, people: IPerson[]) {
+            state.allPeople = people
+            state.currentPeople = people
+            state.currentFilters = {women: true, men: true}
+        },
+        addFilter(state: IState, filter: string) {
+            state.currentFilters[filter] = true
+        },
+        removeFilter(state: IState, filter: string) {
+            state.currentFilters[filter] = false
+        },
+        applyFilter(state: IState, filter: IFilter) {
+            state.currentPeople = state.allPeople.filter(person =>
+                (filter.women && person.gender === 'female') || (filter.men && person.gender === 'male')
+            )
+        },
+        updatePerson(state: IState, currentPerson: IPerson) {
+            state.allPeople = state.allPeople.map(person => person._id === currentPerson._id ? currentPerson : person)
         }
     }
-
-    /**
-     * Load people
-     */
-    loadPeople(): Promise<any> {
-        return Requestor.newRequest()
-            .get('https://updates.suade.org/files/people.json')
-            .then(data => {
-                if (Array.isArray(data) && data.length > 0) {
-                    Vue.set(this.state, 'currentPeople', data)
-                    Vue.set(this.state, 'allPeople', data)
-                }
-            })
-    }
-
-    checkFilter(filter: string) {
-        if (filter !== 'men' && filter !== 'women') {
-            throw `The value of << filter >> is ${filter} and it's not supported`
-        }
-    }
-
-    /**
-     * Add filter from state
-     * @param {string} filter "men" or "women"
-     */
-    addInCurrentFilters(filter: string) {
-        this.checkFilter(filter)
-        Vue.set(this.state.currentFilters, filter, true)
-    }
-
-    /**
-     * Remove filter from state
-     */
-    removeInCurrentFilters(filter: string) {
-        this.checkFilter(filter)
-        Vue.set(this.state.currentFilters, filter, false)
-    }
-
-    /**
-     * Update people to display from filters
-     */
-    updatePeople(filter: Filter): void {
-        Vue.set(this.state, 'currentPeople', this.state.allPeople.filter(person =>
-            (filter.women && person.gender === 'female') || (filter.men && person.gender === 'male')
-        ))
-    }
-
-    /**
-     * Update a person
-     */
-    updatePerson(currentPerson: Person) {
-        Vue.set(this.state, 'allPeople', this.state.allPeople.map(person =>
-            person._id === currentPerson._id ? currentPerson : person
-        ))
-    }
-}
-
-export default new ChartStore()
+})

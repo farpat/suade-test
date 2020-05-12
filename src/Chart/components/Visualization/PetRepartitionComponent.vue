@@ -6,21 +6,13 @@
 
 <script lang="ts">
     import {Chart} from "chart.js"
-    import ChartStore, {Person} from "../../store/ChartStore"
     import {Component, Vue, Watch} from "vue-property-decorator"
-
-    declare global {
-        interface Window {
-            petRepartitionChart: Chart
-        }
-    }
+    import {IDataChart, IPerson} from "../../../type"
 
     @Component
     export default class PetRepartition extends Vue {
-        state = ChartStore.state
-
-        private mounted() {
-            const repartition = this.getData(this.state.currentPeople)
+        private mounted(): void {
+            const repartition = this.getData(this.$store.state.currentPeople)
 
             window.petRepartitionChart = new Chart(<HTMLCanvasElement>this.$el.querySelector('#pet-repartition-chart'), {
                 type: 'bar',
@@ -32,15 +24,16 @@
             })
         }
 
-        @Watch('state', {deep: true})
-        private onStateChanged(value: { currentPeople: Person[] }) {
-            const repartition = this.getData(value.currentPeople)
-
-            window.petRepartitionChart.data = this.getDataForChartJs(repartition)
-            window.petRepartitionChart.update()
+        @Watch('$store.state.currentPeople')
+        private onCurrentPeopleChanged(): void {
+            if (window.petRepartitionChart) {
+                const repartition = this.getData(this.$store.state.currentPeople)
+                window.petRepartitionChart.data = this.getDataForChartJs(repartition)
+                window.petRepartitionChart.update()
+            }
         }
 
-        private getData(people: Person[]): Object {
+        private getData(people: IPerson[]): Object {
             let repartition = {}
 
             for (let person of people) {
@@ -54,7 +47,7 @@
             return repartition
         }
 
-        private getDataForChartJs(people: Object) {
+        private getDataForChartJs(people: Object): IDataChart {
             const keys = Object.keys(people)
             keys.sort()
 

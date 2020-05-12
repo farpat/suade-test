@@ -4,7 +4,7 @@ describe('Edition tests', () => {
         cy.visit('/#/edit')
     })
 
-    it('displays all pets on first load', () => {
+    it('displays all people on first load', () => {
         cy.reload()
         cy.get('h2').should('contain', 'People table')
 
