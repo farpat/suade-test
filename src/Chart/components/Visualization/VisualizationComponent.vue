@@ -2,12 +2,12 @@
     <div class="row">
         <div class="col-md-6">
             <h2>Step 1 : Filter by gender</h2>
-            <GenderRepartitionComponent></GenderRepartitionComponent>
+            <GenderRepartitionComponent/>
         </div>
 
         <div class="col-md-6">
             <h2>Step 2 : Watch {{ this.animalsLabel }}</h2>
-            <PetRepartitionComponent></PetRepartitionComponent>
+            <PetRepartitionComponent/>
         </div>
     </div>
 </template>

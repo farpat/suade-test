@@ -15,7 +15,7 @@
             </tr>
             </thead>
             <tbody>
-            <PersonRow :key="person._id" :person="person" v-for="person in allPeople"></PersonRow>
+            <PersonRow :key="person._id" :person="person" v-for="person in allPeople"/>
             </tbody>
         </table>
     </section>
