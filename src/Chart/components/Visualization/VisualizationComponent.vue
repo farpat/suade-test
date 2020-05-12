@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-md-6">
-            <h2>Step 1 : IFilter by gender</h2>
+            <h2>Step 1 : Filter by gender</h2>
             <GenderRepartitionComponent></GenderRepartitionComponent>
         </div>
 
